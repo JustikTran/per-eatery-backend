@@ -1,0 +1,52 @@
+networks:
+  backend:
+  
+volumes:
+  pgadmin:
+  db:
+
+services:
+  api:
+    container_name: eatery-api
+    image: ${DOCKER_REGISTRY-}api
+    ports:
+      - "8000:8081"
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  pgadmin:
+    container_name: eatery-db-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@ecommerce.store}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  db:
+    container_name: eatery-data
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    environment:
+      - POSTGRES_DB=eateryDb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin@123
+    volumes:
+      - db:/var/lib/postgresql/data
