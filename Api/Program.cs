@@ -1,4 +1,5 @@
 using Application.IRepository;
+using Domain.DTO;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 // Register OData model builder
 var odataBuilder = new ODataConventionModelBuilder();
+odataBuilder.EntitySet<DTOUserResponse>("user");
 builder.Services.AddControllers()
     .AddOData(options => options
         .SetMaxTop(100)
@@ -31,6 +33,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Confiure cors
 builder.Services.AddCors(options =>

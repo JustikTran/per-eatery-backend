@@ -42,6 +42,8 @@ namespace Api.Controllers
                     }
                 });
             }
+            if (result.StatusCode != 401)
+                return BadRequest(result);
             return Unauthorized(result);
         }
 

@@ -56,6 +56,12 @@ namespace Domain.DTO
         public bool Actived { get; set; }
     }
 
+    public class DTOUserUpdate : DTOUserRequest
+    {
+        [Required]
+        public string Id { get; set; } = string.Empty;
+    }
+
     public class DTOUserAuth
     {
         public string Username { get; set; } = string.Empty;
