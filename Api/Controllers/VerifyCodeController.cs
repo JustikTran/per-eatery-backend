@@ -1,12 +1,14 @@
 ﻿using Application.IRepository;
 using Application.IService;
 using Domain.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [Route("odata/verify-code")]
     [ApiController]
+    [AllowAnonymous]
     public class VerifyCodeController : ControllerBase
     {
         private IVerifyCodeRepository repository;

@@ -28,6 +28,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("id={id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var response = await repository.GetById(id);
@@ -35,6 +36,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("create-dish")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateDish([FromBody] DTODishRequestCreate requestCreate)
         {
             var response = await repository.CreateDish(requestCreate);
@@ -42,6 +44,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("id={id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateItem([FromRoute] string id, [FromBody] DTODishRequestUpdate requestUpdate)
         {
             if (id != requestUpdate.Id)
@@ -57,6 +60,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("id={id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDish([FromRoute] string id)
         {
             var response = await repository.DeleteDish(id);
