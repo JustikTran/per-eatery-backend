@@ -9,6 +9,7 @@ namespace Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<VerifyCode> VerifyCodes { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +30,14 @@ namespace Infrastructure.Data
                 .HasOne(u => u.Profile)
                 .WithOne(p => p.User)
                 .HasForeignKey<Profile>(p => p.Id);
+
+            modelBuilder.Entity<VerifyCode>().ToTable("VerifyCodes");
+            modelBuilder.Entity<VerifyCode>(entity =>
+            {
+                entity.Property(e => e.Expired)
+                      .HasColumnType("TIMESTAMP WITH TIME ZONE")
+                      .HasDefaultValueSql("NOW() + interval '5 minutes'");
+            });
 
             modelBuilder.Entity<Dish>().ToTable("Dishes");
         }
