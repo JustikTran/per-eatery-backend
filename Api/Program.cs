@@ -1,4 +1,5 @@
 using Application.IRepository;
+using CloudinaryDotNet;
 using Domain.DTO;
 using Infrastructure.Data;
 using Infrastructure.Repository;
@@ -14,6 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseNpgsql(builder.Configuration["ConnectionStrings:EateryContext"]));
+
+//Configuration Cloudinary  
+builder.Services.Configure<DTOCloudinary>(builder.Configuration.GetSection("CloudinarySettings"));
+
+builder.Services.AddSingleton<Cloudinary>(serviceProvider =>
+{
+    var cloudinarySettings = serviceProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<DTOCloudinary>>().Value;
+    return new Cloudinary(new Account(
+        cloudinarySettings.CloudName,
+        cloudinarySettings.ApiKey,
+        cloudinarySettings.ApiSecret));
+});
 
 // Register OData model builder
 var odataBuilder = new ODataConventionModelBuilder();
