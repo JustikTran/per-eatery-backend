@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 // Register OData model builder
 var odataBuilder = new ODataConventionModelBuilder();
 odataBuilder.EntitySet<DTOUserResponse>("user");
+odataBuilder.EntitySet<DTODishResponse>("dish");
 builder.Services.AddControllers()
     .AddOData(options => options
         .SetMaxTop(100)
@@ -35,6 +36,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IDishRepository, DishRepository>();
 
 // Confiure cors
 builder.Services.AddCors(options =>

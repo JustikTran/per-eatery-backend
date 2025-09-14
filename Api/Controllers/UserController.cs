@@ -2,6 +2,7 @@
 using Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System.Security.Claims;
 
@@ -19,6 +20,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IEnumerable<DTOUserResponse>> GetAll()
         {
             var users = _userRepository.GetAllUser();
