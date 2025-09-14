@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Domain.Entity
 {
@@ -33,5 +32,7 @@ namespace Domain.Entity
 
         [Column(TypeName = "BOOLEAN")]
         public bool IsDeleted { get; set; }
+
+        public virtual Profile Profile { get; set; } = default!;
     }
 }

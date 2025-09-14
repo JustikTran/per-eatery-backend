@@ -3,6 +3,7 @@ using Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
@@ -24,6 +25,24 @@ namespace Api.Controllers
             return Ok(users);
         }
 
+        [HttpGet("token")]
+        public async Task<IActionResult> GetByToken()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return BadRequest(new DTOResponse<DTOUserResponse>
+                {
+                    Message = "UserId not found in token.",
+                    StatusCode = 400,
+                    Data = null
+                });
+            }
+            var result = await _userRepository.GetUserById(userId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+
         [HttpGet("id={id}")]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
@@ -32,6 +51,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("username{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByUsername([FromRoute] string username)
         {
             var result = await _userRepository.ExistUsername(username);
@@ -39,11 +59,21 @@ namespace Api.Controllers
         }
 
         [HttpGet("email={email}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
             var result = await _userRepository.ExistEmail(email);
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet("phone={phone}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByPhone([FromRoute] string phone)
+        {
+            var result = await _userRepository.ExistPhone(phone);
+            return StatusCode(result.StatusCode, result);
+        }
+
 
         [HttpPut("id={id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] DTOUserUpdate userUpdate)
