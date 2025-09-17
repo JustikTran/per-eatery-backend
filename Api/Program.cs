@@ -1,3 +1,4 @@
+using Api.VNPayService;
 using Application.IRepository;
 using CloudinaryDotNet;
 using Domain.DTO;
@@ -63,6 +64,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IVNPayService, VNPayService>();
 
 // Confiure cors
 builder.Services.AddCors(options =>
