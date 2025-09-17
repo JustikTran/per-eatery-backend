@@ -256,9 +256,35 @@ namespace Infrastructure.Repository
             }
         }
 
-        public Task<DTOResponse<DTOUserResponse>> GetUserById(string userId)
+        public async Task<DTOResponse<DTOUserResponse>> GetUserById(string userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _context.Users.FindAsync(Guid.Parse(userId));
+                if (user == null)
+                {
+                    return new DTOResponse<DTOUserResponse>
+                    {
+                        StatusCode = 404,
+                        Message = "User does not exist.",
+                        Data = null
+                    };
+                }
+                return new DTOResponse<DTOUserResponse>
+                {
+                    StatusCode = 200,
+                    Message = "Find user successfully.",
+                    Data = UserMapper.Instance.ToDTOUserResponse(user)
+                };
+            }
+            catch (Exception err)
+            {
+                return new DTOResponse<DTOUserResponse>
+                {
+                    StatusCode = 500,
+                    Message = err.Message
+                };
+            }
         }
 
         public async Task<DTOResponse<DTOUserResponse>> UpdateUser(DTOUserUpdate userUpdate)
