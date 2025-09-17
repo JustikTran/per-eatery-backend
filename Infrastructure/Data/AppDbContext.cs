@@ -16,6 +16,7 @@ namespace Infrastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Messages> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,10 @@ namespace Infrastructure.Data
                 .HasForeignKey<Profile>(p => p.Id);
 
             modelBuilder.Entity<VerifyCode>().ToTable("VerifyCodes");
+            modelBuilder.Entity<VerifyCode>()
+                .HasOne(vc => vc.User)
+                .WithMany(u => u.VerifyCodes)
+                .HasForeignKey(vc => vc.UserId);
             modelBuilder.Entity<VerifyCode>(entity =>
             {
                 entity.Property(e => e.Expired)
@@ -68,6 +73,24 @@ namespace Infrastructure.Data
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId);
+
+            modelBuilder.Entity<OrderItem>().ToTable("OrderItems");
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<PaymentMethod>().ToTable("PaymentMethods");
+            modelBuilder.Entity<PaymentMethod>()
+                .HasMany(pm => pm.Orders)
+                .WithOne(o => o.PaymentMethod)
+                .HasForeignKey(o => o.PaymentMethodId);
+
+            modelBuilder.Entity<Messages>().ToTable("Messages");
+            modelBuilder.Entity<Messages>()
+                .HasOne(m => m.User)
+                .WithMany(u => u.Messages)
+                .HasForeignKey(m => m.UserId);
         }
     }
 }

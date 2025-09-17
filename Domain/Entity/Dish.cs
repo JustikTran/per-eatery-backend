@@ -30,5 +30,7 @@ namespace Domain.Entity
 
         [Required]
         public bool InStock { get; set; }
+
+        public virtual ICollection<CartItem> CartItems { get; set; } = default!;
     }
 }

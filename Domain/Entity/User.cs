@@ -34,5 +34,9 @@ namespace Domain.Entity
         public bool IsDeleted { get; set; }
 
         public virtual Profile Profile { get; set; } = default!;
+        public virtual Cart Cart { get; set; } = default!;
+        public virtual ICollection<Order> Orders { get; set; } = default!;
+        public virtual ICollection<Messages> Messages { get; set; } = default!;
+        public virtual ICollection<VerifyCode> VerifyCodes { get; set; } = default!;
     }
 }
