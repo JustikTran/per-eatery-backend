@@ -34,6 +34,8 @@ odataBuilder.EntitySet<DTOUserResponse>("user");
 odataBuilder.EntitySet<DTODishResponse>("dish");
 odataBuilder.EntitySet<DTOCartResponse>("cart");
 odataBuilder.EntitySet<DTOCartItemResponse>("cart-item");
+odataBuilder.EntitySet<DTOOrderResponse>("order");
+odataBuilder.EntitySet<DTOOrderItemResponse>("order-item");
 builder.Services.AddControllers()
     .AddOData(options => options
         .SetMaxTop(100)
@@ -55,6 +57,8 @@ builder.Services.AddScoped<IDishRepository, DishRepository>();
 builder.Services.AddScoped<IVerifyCodeRepository, VerifyCodeRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartItemRepositoy, CartItemRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 
 // Confiure cors
 builder.Services.AddCors(options =>

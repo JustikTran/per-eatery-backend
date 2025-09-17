@@ -41,7 +41,7 @@ namespace Api.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateCartItem([FromBody] DTOCartItemRequestCreate requestCreate)
         {
             if (requestCreate.CartId.IsNullOrEmpty())

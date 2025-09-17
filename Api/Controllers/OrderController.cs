@@ -1,27 +1,29 @@
 ﻿using Application.IRepository;
 using Domain.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace Api.Controllers
 {
-    [Route("odata/cart")]
+    [Route("odata/order")]
     [ApiController]
-    public class CartController : ODataController
+    [Authorize]
+    public class OrderController : ODataController
     {
-        private readonly ICartRepository repository;
-        public CartController(ICartRepository cartRepository)
+        private readonly IOrderRepository repository;
+        public OrderController(IOrderRepository repository)
         {
-            this.repository = cartRepository ?? throw new ArgumentException(nameof(cartRepository));
+            this.repository = repository ?? throw new ArgumentException(nameof(repository));
         }
 
         [HttpGet]
         [EnableQuery]
-        public ActionResult<IEnumerable<DTOCartResponse>> GetAllCarts()
+        public ActionResult<IEnumerable<DTOOrderResponse>> GetAllOrder()
         {
-            var carts = repository.GetAllCart();
-            return Ok(carts.AsQueryable());
+            var orders = repository.GetAllOrder();
+            return Ok(orders.AsQueryable());
         }
 
         [HttpGet("id={id}")]
@@ -32,32 +34,32 @@ namespace Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateCart([FromBody] DTOCartRequestCreate requestCreate)
+        public async Task<IActionResult> CreateOrder([FromBody] DTOOrderRequestCreate requestCreate)
         {
-            var response = await repository.CreateCart(requestCreate);
+            var response = await repository.CreateOrder(requestCreate);
             return StatusCode(response.StatusCode, response);
         }
 
         [HttpPut("id={id}")]
-        public async Task<IActionResult> UpdateCart([FromRoute] string id, [FromBody] DTOCartRequestUpdate requestUpdate)
+        public async Task<IActionResult> UpdateOrder([FromRoute] string id, [FromBody] DTOOrderRequestUpdate requestUpdate)
         {
             if (id != requestUpdate.Id)
             {
-                return BadRequest(new DTOResponse<DTOCartResponse>
+                return BadRequest(new DTOResponse<DTOOrderResponse>
                 {
                     Message = "ID does not match.",
                     StatusCode = 400,
                     Data = null
                 });
             }
-            var response = await repository.UpdateCart(requestUpdate);
+            var response = await repository.UpdateOrder(requestUpdate);
             return StatusCode(response.StatusCode, response);
         }
 
         [HttpDelete("id={id}")]
-        public async Task<IActionResult> DeleteCart([FromRoute] string id)
+        public async Task<IActionResult> DeleteOrder([FromRoute] string id)
         {
-            var response = await repository.DeleteCart(id);
+            var response = await repository.DeleteOrder(id);
             return StatusCode(response.StatusCode, response);
         }
     }
