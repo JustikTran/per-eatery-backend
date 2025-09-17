@@ -27,7 +27,7 @@ namespace Api.Controllers
             return Ok(users);
         }
 
-        [HttpGet("token")]
+        [HttpPost("token")]
         public async Task<IActionResult> GetByToken()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
