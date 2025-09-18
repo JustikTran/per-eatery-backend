@@ -99,7 +99,12 @@ namespace Domain.DTO
             {
                 UserId = Guid.Parse(dto.UserId),
                 Thumbnail = dto.Thumbnail,
-                CartItems = dto.Items?.Select(CartItemMapper.Instance.ToEntity).ToList() ?? new List<CartItem>()
+                CartItems = dto.Items?.Select(ci => new CartItem
+                {
+                    DishId = Guid.Parse(ci.DishId),
+                    Thumbnail = ci.Thumbnail,
+                    Quantity = ci.Quantity
+                }).ToList() ?? new List<CartItem>()
             };
         }
 
@@ -140,7 +145,7 @@ namespace Domain.DTO
         {
             return new CartItem
             {
-                CartId = dto.CartId != null ? Guid.Parse(dto.CartId) : Guid.NewGuid(),
+                CartId = Guid.Parse(dto.CartId),
                 DishId = Guid.Parse(dto.DishId),
                 Thumbnail = dto.Thumbnail,
                 Quantity = dto.Quantity
