@@ -80,7 +80,6 @@ namespace Domain.DTO
         {
             return new Dish
             {
-                Id = Guid.NewGuid(),
                 Name = requestCreate.Name,
                 Description = requestCreate.Description,
                 Image = requestCreate.Image,

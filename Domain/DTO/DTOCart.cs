@@ -140,7 +140,7 @@ namespace Domain.DTO
         {
             return new CartItem
             {
-                CartId = Guid.Parse(dto.CartId),
+                CartId = dto.CartId != null ? Guid.Parse(dto.CartId) : Guid.NewGuid(),
                 DishId = Guid.Parse(dto.DishId),
                 Thumbnail = dto.Thumbnail,
                 Quantity = dto.Quantity

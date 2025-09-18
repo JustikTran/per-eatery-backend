@@ -108,7 +108,6 @@ namespace Domain.DTO
         {
             return new User
             {
-                Id = Guid.NewGuid(),
                 Username = request.Username,
                 Password = request.Password,
                 Email = request.Email,

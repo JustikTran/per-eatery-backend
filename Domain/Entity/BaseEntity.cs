@@ -7,7 +7,7 @@ namespace Domain.Entity
     {
         [Key]
         [Column(TypeName = "UUID")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Column(TypeName = "TIMESTAMP WITH TIME ZONE")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

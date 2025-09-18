@@ -54,7 +54,6 @@ namespace Domain.DTO
         {
             return new DTOProfileResponse
             {
-                Id = profile.Id.ToString(),
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
                 Avatar = profile.Avatar,

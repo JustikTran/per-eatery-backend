@@ -52,7 +52,7 @@ namespace Api.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("username{id}")]
+        [HttpGet("username={username}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByUsername([FromRoute] string username)
         {
