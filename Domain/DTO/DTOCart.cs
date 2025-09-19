@@ -15,6 +15,8 @@ namespace Domain.DTO
         public string? Thumbnail { get; set; }
         [JsonPropertyName(nameof(Items))]
         public List<DTOCartItemResponse>? Items { get; set; }
+        [JsonPropertyName(nameof(Total))]
+        public decimal Total { get; set; }
         [JsonPropertyName(nameof(CreatedAt))]
         public DateTime CreatedAt { get; set; }
         [JsonPropertyName(nameof(UpdatedAt))]

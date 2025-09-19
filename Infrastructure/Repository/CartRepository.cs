@@ -12,6 +12,22 @@ namespace Infrastructure.Repository
         {
             this.context = context ?? throw new ArgumentException(nameof(context));
         }
+
+        private decimal TotalPrice(Guid cartId)
+        {
+            var listItems = context.CartItems
+                .Include(ci => ci.Dish)
+                .Where(ci => ci.CartId == cartId)
+                .ToList();
+            decimal total = 0;
+            foreach (var item in listItems)
+            {
+                total += item.Quantity * item.Dish.Price;
+            }
+            return total;
+        }
+
+
         public async Task<DTOResponse<DTOCartResponse>> CreateCart(DTOCartRequestCreate requestCreate)
         {
             try
@@ -104,7 +120,12 @@ namespace Infrastructure.Repository
                     .Include(c => c.CartItems)
                     .ToList();
                 return listCart
-                    .Select(CartMapper.Instance.ToResponse)
+                    .Select(c =>
+                    {
+                        var res = CartMapper.Instance.ToResponse(c);
+                        res.Total = TotalPrice(c.Id);
+                        return res;
+                    })
                     .AsQueryable();
             }
             catch (Exception err)
