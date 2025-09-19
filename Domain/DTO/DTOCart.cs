@@ -27,6 +27,8 @@ namespace Domain.DTO
         public string? Id { get; set; }
         [JsonPropertyName(nameof(DishId))]
         public string? DishId { get; set; }
+        [JsonPropertyName(nameof(Dish))]
+        public DTODishResponse? Dish { get; set; }
         [JsonPropertyName(nameof(Thumbnail))]
         public string? Thumbnail { get; set; }
         [JsonPropertyName(nameof(Quantity))]
@@ -159,6 +161,7 @@ namespace Domain.DTO
                 Id = entity.Id.ToString(),
                 CartId = entity.CartId.ToString(),
                 DishId = entity.DishId.ToString(),
+                Dish = entity.Dish != null ? DishMapper.Instance.ToResponse(entity.Dish) : null,
                 Thumbnail = entity.Thumbnail,
                 Quantity = entity.Quantity,
                 CreatedAt = entity.CreatedAt,

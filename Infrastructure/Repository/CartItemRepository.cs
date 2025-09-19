@@ -118,7 +118,9 @@ namespace Infrastructure.Repository
         {
             try
             {
-                var listItem = context.CartItems.ToList();
+                var listItem = context.CartItems
+                    .Include(ci => ci.Dish)
+                    .ToList();
                 return listItem
                     .Select(CartItemMapper.Instance.ToResponse)
                     .AsQueryable();
@@ -134,6 +136,7 @@ namespace Infrastructure.Repository
             try
             {
                 var item = await context.CartItems
+                    .Include(ci => ci.Dish)
                     .Where(ci => ci.CartId.ToString() == cartId)
                     .ToListAsync();
                 if (item == null)

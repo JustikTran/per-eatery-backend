@@ -34,7 +34,7 @@ namespace Api.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpGet("card-id={id}")]
+        [HttpGet("cart-id={id}")]
         public async Task<IActionResult> GetByCartId([FromRoute] string id)
         {
             var response = await repository.GetByCartID(id);

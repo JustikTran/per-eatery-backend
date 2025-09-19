@@ -54,8 +54,8 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Cart>().ToTable("Carts");
             modelBuilder.Entity<Cart>()
                 .HasOne(u => u.User)
-                .WithOne(c => c.Cart)
-                .HasForeignKey<Cart>(c => c.UserId);
+                .WithMany(c => c.Carts)
+                .HasForeignKey(c => c.UserId);
             modelBuilder.Entity<Cart>()
                 .HasMany(c => c.CartItems)
                 .WithOne(ci => ci.Cart)
