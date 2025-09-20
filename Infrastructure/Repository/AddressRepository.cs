@@ -23,6 +23,7 @@ namespace Infrastructure.Repository
             var addresses = await context.AddressReceives
                 .Where(a => a.UserId.ToString() == userId && a.IsDefault)
                 .ToListAsync();
+            if (!addresses.Any()) return;
             foreach (var address in addresses)
             {
                 address.IsDefault = false;
