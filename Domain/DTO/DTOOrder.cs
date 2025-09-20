@@ -11,6 +11,10 @@ namespace Domain.DTO
         public string? Id { get; set; }
         [JsonPropertyName(nameof(UserId))]
         public string? UserId { get; set; }
+        [JsonPropertyName(nameof(AddressId))]
+        public string? AddressId { get; set; }
+        [JsonPropertyName(nameof(Address))]
+        public DTOAddressReceiveResponse? Address { get; set; }
         [JsonPropertyName(nameof(MethodId))]
         public string? MethodId { get; set; }
         [JsonPropertyName(nameof(PaidAt))]
@@ -25,6 +29,7 @@ namespace Domain.DTO
         public DateTime UpdatedAt { get; set; }
         [JsonPropertyName(nameof(OrderItems))]
         public List<DTOOrderItemResponse>? OrderItems { get; set; }
+
     }
 
     public class DTOOrderItemResponse
@@ -49,6 +54,8 @@ namespace Domain.DTO
     {
         [Required]
         public string UserId { get; set; } = string.Empty;
+        [Required]
+        public string AddressId { get; set; } = string.Empty;
 
         [Required]
         public string MethodId { get; set; } = string.Empty;
@@ -115,6 +122,7 @@ namespace Domain.DTO
             return new Order
             {
                 UserId = Guid.Parse(requestCreate.UserId),
+                AddressId = Guid.Parse(requestCreate.AddressId),
                 PaymentMethodId = Guid.Parse(requestCreate.MethodId),
                 PaidAt = requestCreate.PaidAt == default ? default : requestCreate.PaidAt,
                 Status = requestCreate.Status,
@@ -129,6 +137,8 @@ namespace Domain.DTO
             {
                 Id = order.Id.ToString(),
                 UserId = order.UserId.ToString(),
+                AddressId = order.AddressId.ToString(),
+                Address = AddressMapper.Instance.ToResponse(order.Address),
                 MethodId = order.PaymentMethodId.ToString(),
                 PaidAt = order.PaidAt,
                 Status = order.Status,

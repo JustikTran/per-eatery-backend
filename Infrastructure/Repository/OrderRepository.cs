@@ -105,6 +105,7 @@ namespace Infrastructure.Repository
             {
                 var listOrder = context.Orders
                     .Include(o => o.OrderItems)
+                    .Include(o => o.Address)
                     .Where(o => !o.IsDeleted)
                     .Select(OrderMapper.Instance.ToResponse)
                     .AsQueryable();
@@ -122,6 +123,7 @@ namespace Infrastructure.Repository
             {
                 var order = await context.Orders
                     .Include(o => o.OrderItems)
+                    .Include(o => o.Address)
                     .FirstOrDefaultAsync(o => o.Id == Guid.Parse(orderId) && !o.IsDeleted);
                 if (order == null)
                 {

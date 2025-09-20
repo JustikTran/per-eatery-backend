@@ -13,6 +13,12 @@ namespace Domain.Entity
         public virtual User User { get; set; } = default!;
 
         [Required]
+        public Guid AddressId { get; set; }
+
+        [ForeignKey(nameof(AddressId))]
+        public virtual AddressReceive Address { get; set; } = default!;
+
+        [Required]
         [Column(TypeName = "UUID")]
         public Guid PaymentMethodId { get; set; }
 

@@ -24,5 +24,7 @@ namespace Domain.Entity
         public Guid UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = default!;
+
+        public virtual ICollection<Order> Orders { get; set; } = default!;
     }
 }

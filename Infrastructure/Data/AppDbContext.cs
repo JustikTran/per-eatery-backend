@@ -98,6 +98,10 @@ namespace Infrastructure.Data
                 .HasOne(ar => ar.User)
                 .WithMany(u => u.AddressReceives)
                 .HasForeignKey(ar => ar.UserId);
+            modelBuilder.Entity<AddressReceive>()
+                .HasMany(ar => ar.Orders)
+                .WithOne(o => o.Address)
+                .HasForeignKey(o => o.AddressId);
         }
     }
 }
