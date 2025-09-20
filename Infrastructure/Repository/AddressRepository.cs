@@ -18,6 +18,19 @@ namespace Infrastructure.Repository
             return await context.AddressReceives.AnyAsync(a => a.UserId.ToString() == userId);
         }
 
+        private async Task ResetDefaultAddress(string userId)
+        {
+            var addresses = await context.AddressReceives
+                .Where(a => a.UserId.ToString() == userId && a.IsDefault)
+                .ToListAsync();
+            foreach (var address in addresses)
+            {
+                address.IsDefault = false;
+                context.Update(address);
+            }
+            await context.SaveChangesAsync();
+        }
+
         public async Task<DTOResponse<DTOAddressReceiveResponse>> CreateAddress(DTOAddressRequestCreate requestCreate)
         {
             try
@@ -26,6 +39,10 @@ namespace Infrastructure.Repository
                 if (!exist)
                 {
                     requestCreate.IsDefault = true;
+                }
+                else if (requestCreate.IsDefault)
+                {
+                    await ResetDefaultAddress(requestCreate.UserId);
                 }
                 var address = AddressMapper.Instance.ToEntity(requestCreate);
                 context.AddressReceives.Add(address);
