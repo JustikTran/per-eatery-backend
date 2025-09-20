@@ -39,6 +39,7 @@ odataBuilder.EntitySet<DTOOrderResponse>("order");
 odataBuilder.EntitySet<DTOOrderItemResponse>("order-item");
 odataBuilder.EntitySet<DTOPaymentMethodResponse>("payment-method");
 odataBuilder.EntitySet<DTOMessageResponse>("message");
+odataBuilder.EntitySet<DTOAddressReceiveResponse>("address");
 builder.Services.AddControllers()
     .AddOData(options => options
         .SetMaxTop(100)
@@ -64,6 +65,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 
 // Confiure cors

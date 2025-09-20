@@ -17,6 +17,7 @@ namespace Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Messages> Messages { get; set; }
+        public DbSet<AddressReceive> AddressReceives { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,6 +92,12 @@ namespace Infrastructure.Data
                 .HasOne(m => m.User)
                 .WithMany(u => u.Messages)
                 .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<AddressReceive>().ToTable("AddressReceives");
+            modelBuilder.Entity<AddressReceive>()
+                .HasOne(ar => ar.User)
+                .WithMany(u => u.AddressReceives)
+                .HasForeignKey(ar => ar.UserId);
         }
     }
 }

@@ -38,5 +38,6 @@ namespace Domain.Entity
         public virtual ICollection<Order> Orders { get; set; } = default!;
         public virtual ICollection<Messages> Messages { get; set; } = default!;
         public virtual ICollection<VerifyCode> VerifyCodes { get; set; } = default!;
+        public virtual ICollection<AddressReceive> AddressReceives { get; set; } = default!;
     }
 }
