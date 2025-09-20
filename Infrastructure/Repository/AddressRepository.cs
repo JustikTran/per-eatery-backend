@@ -184,7 +184,13 @@ namespace Infrastructure.Repository
                 exist.Address = requestUpdate.Address;
                 exist.IsDefault = requestUpdate.IsDefault;
                 exist.UpdatedAt = DateTime.UtcNow;
-                context.Update(exist);
+
+                if (requestUpdate.IsDefault)
+                {
+                    await ResetDefaultAddress(requestUpdate.UserId);
+                }
+
+                context.AddressReceives.Update(exist);
                 var result = await context.SaveChangesAsync();
                 if (result > 0)
                 {
