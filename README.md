@@ -7,11 +7,11 @@ Backend API cho hệ thống **Eatery** sử dụng **.NET 8** và được cont
 ## Mô tả dự án
 
 Dự án backend hỗ trợ các chức năng như quản lý món ăn, quản lý đơn hàng, người dùng, v.v.  
-Xây dựng theo kiến trúc nhiều lớp (Clean Architecture / Onion / n-layer):  
+Xây dựng theo kiến trúc nhiều lớp (Clean Architecture):  
 - `Api/`: Web API (Controllers, startup)  
 - `Application/`: Interfaces, Service
 - `Domain/`: Entities, DTOs   
-- `Infrastructure/`: Cơ sở dữ liệu, Repository, EF Core  
+- `Infrastructure/`: Cơ sở dữ liệu, Repository, EF Core, Migrations
 
 ---
 
@@ -28,9 +28,9 @@ Xây dựng theo kiến trúc nhiều lớp (Clean Architecture / Onion / n-laye
 
 - `Backend.sln`
 - `Api/` # Web API (Controllers, Swagger, Middleware, Startup)
-- `Application/` # Business logic, DTOs, Services
-- `Domain/` # Entities, Interfaces
-- `Infrastructure/` # EF Core, Repository, Database context
+- `Application/` # Interfaces, Services
+- `Domain/` # Entities, DTOs 
+- `Infrastructure/` # EF Core, Repository, Database context, Migrations
 - `docker-compose.yml` # File cấu hình Docker Compose
 
 
