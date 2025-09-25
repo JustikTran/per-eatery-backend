@@ -69,7 +69,7 @@ docker-compose up --build -d
 Lệnh trên sẽ:
 
 - Build image cho API
-- Tạo container DB (SQL Server)
+- Tạo container DB (PostgreSQL)
 - Liên kết API với DB qua mạng nội bộ
 
 #### 3. Truy cập API
